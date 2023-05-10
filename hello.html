@@ -1,1 +1,96 @@
-Fuck Off CBKK
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Read Text Input with JavaScript</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+		.container {
+			width: 600px;
+			margin: 0 auto;
+			padding: 20px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+		form {
+			display: flex;
+			align-items: center;
+			margin-bottom: 20px;
+		}
+		label {
+			margin-right: 10px;
+			font-weight: bold;
+		}
+		input[type="text"] {
+			padding: 10px;
+			font-size: 16px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			flex-grow: 1;
+			margin-right: 10px;
+		}
+		button[type="submit"] {
+			padding: 10px 20px;
+			font-size: 16px;
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		li {
+			margin-bottom: 10px;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+	</style>
+	<script>
+		function displayInput() {
+			let inputField = document.getElementById("text-input");
+			let currentInput = inputField.value;
+
+			if (currentInput) {
+				let allInputs = [];
+
+				if (localStorage.getItem("all-inputs")) {
+					allInputs = JSON.parse(localStorage.getItem("all-inputs"));
+				}
+
+				allInputs.push(currentInput);
+
+				let inputsList = document.getElementById("inputs-list");
+				inputsList.innerHTML = "";
+
+				allInputs.forEach(input => {
+					let li = document.createElement("li");
+					li.innerText = input;
+					inputsList.appendChild(li);
+				});
+
+				localStorage.setItem("all-inputs", JSON.stringify(allInputs));
+				inputField.value = "";
+			}
+		}
+	</script>
+</head>
+<body>
+
+	<div class="container">
+		<form onsubmit="event.preventDefault(); displayInput();">
+			<label for="text-input">Enter some text:</label>
+			<input type="text" id="text-input" name="text-input">
+			<button type="submit">Submit</button>
+		</form>
+
+		<ul id="inputs-list"></ul>
+	</div>
+
+</body>
+</html>
